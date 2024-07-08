@@ -14,19 +14,18 @@ jobs:
         env:
           DOCKER_REPO: 'codeninjas-proj-docker-local'
           IMAGE_NAME: 'my-very-cool-image:${{ github.run_number }}'
-          JF_URL: https://jasmine1988.jfrog.io/
+          JF_URL: https://${{ vars.JF_URL }}/
           DOCKER_CLI_EXPERIMENTAL: enabled
         steps:
             # Use the specific setup-cli branch
             - name: Setup JFrog CLI
-              uses: jfrog/setup-jfrog-cli@v3
+              uses: jfrog/setup-jfrog-cli@v4
               id: setup-cli
               env:
-                JF_URL: https://jasmine1988.jfrog.io/
+                JF_URL: https://${{ vars.JF_URL }}/
                 JF_PROJECT: ${{ vars.JF_PROJECT }}
               with:
-                  oidc-provider-name: jordan
-                  oidc-audience: jfrog-github
+                  oidc-provider-name: jfrog-github-oidc
 
             - name: Checkout the repository
               uses: actions/checkout@v4
